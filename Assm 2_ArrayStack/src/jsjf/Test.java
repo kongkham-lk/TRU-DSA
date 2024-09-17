@@ -20,6 +20,11 @@ public class Test {
         testLogic(stackDropOut, inputs, size);
     }
 
+    /**
+     * Helper function for grabing all the element of an array
+     * @param inputs
+     * @return
+     */
     private static String grabAllElFromArray(Integer[] inputs) {
         String result = "";
         
@@ -37,26 +42,27 @@ public class Test {
      * @param size
      */
     private static <T> void testLogic(StackADT<T> stack, T[] inputs, int size) {
-        System.out.println("Initial stack's el: " + stack);
-        System.out.println("Initial stack size: " + size);
-        System.out.println("isEmpty:            " + stack.isEmpty() + "\n");
+        System.out.println("Initial stack's el:     " + stack);
+        System.out.println("Initial stack size:     " + size);
+        System.out.println("Initial top point at:   " + stack.size());
+        System.out.println("isEmpty:                " + stack.isEmpty() + "\n");
 
         for (int i = 0; i < inputs.length; i++) {
             stack.push(inputs[i]);
 
+            // print out when fill up all the stack
             if (stack.size() % size == 0) {
-                // print out when fill up all the stack
-                System.out.println("Total push of el:   " + stack);
+                System.out.println("Update Push:            " + stack);
+                System.out.println("Top point at:           " + stack.size());
             }
         }
         // print again after push more element to the stack that is already full
-        System.out.println("\nPush more:          " + stack);
-        System.out.println("Top point at:       " + stack.size());
-        System.out.println("Peek:               " + stack.peek());
-        System.out.println("Pop:                " + stack.pop());
-        System.out.println("Pop:                " + stack.pop());
-        System.out.println("After pop, top at:  " + stack.size());
-        System.out.println("After pop, remain:  " + stack);
-        System.out.println("isEmpty:            " + stack.isEmpty());
+        System.out.println("\nPush all:               " + stack);
+        System.out.println("After Push, top at:     " + stack.size());
+        System.out.println("Peek:                   " + stack.peek() + "\n");
+        System.out.println("Pop:                    " + stack.pop());
+        System.out.println("After Pop, top at:      " + stack.size());
+        System.out.println("After Pop, remain:      " + stack);
+        System.out.println("isEmpty:                " + stack.isEmpty());
     }
 }
