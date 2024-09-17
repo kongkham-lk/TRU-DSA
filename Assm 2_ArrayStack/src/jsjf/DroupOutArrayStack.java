@@ -10,8 +10,6 @@ import jsjf.exceptions.EmptyCollectionException;
  * @version 4.0
  */
 public class DroupOutArrayStack<T> extends ArrayStack<T> {
-    int tail = 0;
-
     /**
      * Creates an empty stack using the default capacity.
      */
@@ -35,17 +33,11 @@ public class DroupOutArrayStack<T> extends ArrayStack<T> {
      * @param element generic element to be pushed onto stack
      */
     public void push(T element) {
-        if (top == stack.length) {
-            // reset tail when tail exceed the stack size
-            if (tail == stack.length)
-                tail = 0;
-
-            stack[tail] = element;
-            tail++;
-        } else {
-            stack[top] = element;
-            top++;
-        }
+        // reset top to 0 when it reach the last element
+        if (top == stack.length)
+            top = 0;
+            
+        super.push(element);
     }
 
     /**
@@ -56,59 +48,11 @@ public class DroupOutArrayStack<T> extends ArrayStack<T> {
      * @throws EmptyCollectionException if stack is empty
      */
     public T pop() throws EmptyCollectionException {
-        if (top == stack.length) {
-            // move tail to the end of array after the index 0 of array is remove.
-            // so that the next pop will be point to the next new element which is at the end of the stack.
-            if (tail == 0)
-                tail = stack.length;
-
-            tail--;
-
-            T result = stack[tail];
-            stack[tail] = null;
-
-            return result;
-        }
-        else
-            return super.pop();
-    }
-
-    /**
-     * Returns a reference to the element at the top of this stack.
-     * The element is not removed from the stack.
-     * 
-     * @return element on top of stack
-     * @throws EmptyCollectionException if stack is empty
-     */
-    public T peek() throws EmptyCollectionException {
-        if (top == stack.length && tail != 0)
-            return stack[tail - 1];
-
-        return stack[top - 1];
-    }
-
-    /**
-     * Returns true if this stack is empty and false otherwise.
-     * 
-     * @return true if this stack is empty
-     */
-    public boolean isEmpty() {
-        if (top == stack.length)
-            return tail == 0;
-        else
-            return top == 0;
-    }
-
-    /**
-     * Returns the number of elements in this stack.
-     * 
-     * @return the number of elements in the stack
-     */
-    public int size() {
-        if (top == stack.length && tail != 0)
-            return tail;
-        else
-            return top;
+        // move top to the end of array if there is not element at its front.
+        if (top == 0)
+            top = stack.length;
+            
+        return super.pop();
     }
 
     /**
@@ -118,28 +62,18 @@ public class DroupOutArrayStack<T> extends ArrayStack<T> {
      */
     public String toString() {
         String result = "";
-        int target = 0;
-
-        // When stack is not full yet, use top to as tail instead,
-        // tail will be only work after stack is full and new elements is keeping push into the stack.
-        if (top != stack.length)
-            target = top;
-        else
-            target = tail;
-
-        // Since implementing push the same as circular array, tail index is not necessary point behind head index.
-        // Thus when printing stack's element from top to bottom need to devided into 2 for loops.
-        // Getter tail to the first element of stack then getting the last element of stack to the index before tail which is head.
-        for (int i = target - 1; i >= 0; i--) {
+        // Since using the concept of circular array, which Top can come before the oldest element.
+        // In order to print out the right order, we need 2 for loop to do the task. 
+        // e.g. let Top = 2 and stack size is 5, the first iteration will start from Top-1 to the index 0, 
+        // then start from the end of stack to Top. 
+        for (int i = top - 1; i >= 0; i--) {
             if (stack[i] == null)
                 continue;
-                
             result += stack[i] + " ";
         }
-        for (int i = top - 1; i >= target; i--) {
+        for (int i = stack.length - 1; i >= top; i--) {
             if (stack[i] == null)
                 continue;
-                
             result += stack[i] + " ";
         }
 
