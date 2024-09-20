@@ -56,6 +56,22 @@ public class DroupOutArrayStack<T> extends ArrayStack<T> {
     }
 
     /**
+     * Returns true if this stack is empty and false otherwise.
+     * 
+     * @return true if this stack is empty
+     */
+    public boolean isEmpty() {
+        // cannot use top to check if stack is empty since top can point to any index, other than index 0.
+        // E.g. stack.length is 3, and 5 element is push, top = 2. Then if we pop all the elements out of the stack,
+        // pop all 3 elements, top will be still point to index 2.
+        for (int i = 0; i < stack.length; i++) {
+            if (stack[i] != null)
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * Returns a string representation of this stack.
      * 
      * @return a string representation of the stack
