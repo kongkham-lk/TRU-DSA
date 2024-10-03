@@ -8,23 +8,23 @@ package jsjf;
  */
 public class DropOutLinkedStack<T> extends LinkedStack<T>
 {
-    private static int LIMIT_COUNT = 100;
+    private static int limitCount = 100;
 
 	/**
 	 * Creates an empty stack.
 	 */
 	public DropOutLinkedStack()
 	{
-        this(LIMIT_COUNT);
+        this(limitCount);
 	}
 
 	/**
 	 * Creates an empty stack.
 	 */
-	public DropOutLinkedStack(int limtiCount)
+	public DropOutLinkedStack(int limitCount_in)
 	{
         super();
-        LIMIT_COUNT = limtiCount;
+        limitCount = limitCount_in;
 	}
 
 	/**
@@ -33,15 +33,20 @@ public class DropOutLinkedStack<T> extends LinkedStack<T>
 	 */
 	public void push(T element)
 	{
-        if (count == LIMIT_COUNT) {
-            LinearNode<T> curr = top;
-    
-            while (curr.getNext().getNext() != null) {
-                curr = curr.getNext();
+        if (limitCount <= 0) // do nth when limit size is zero
+            return;
+        else if (limitCount == 1) // if limit size set to 1, the whole Linked stack will always has 1 node
+            top = null;
+        else
+            if (count == limitCount) {
+                LinearNode<T> curr = top;
+        
+                while (curr.getNext().getNext() != null) {
+                    curr = curr.getNext();
+                }
+                curr.setNext(null);
+                count--;
             }
-            curr.setNext(null);
-            count--;
-        }
         super.push(element);
 	}
 }

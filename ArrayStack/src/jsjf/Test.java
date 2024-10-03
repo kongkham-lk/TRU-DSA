@@ -4,7 +4,7 @@ public class Test {
     public static void main(String[] args) {
 
         int size = 3;
-        Integer[] inputs = new Integer[]{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        Integer[] inputs = new Integer[]{ 1, 2, 3, 4 };
         System.out.println("\nInputs sample: " + grabAllElFromArray(inputs));
 
         System.out.println("\n------------- Test ArrayStack's method!!! -------------\n");
@@ -52,17 +52,18 @@ public class Test {
 
             // print out when fill up all the stack
             if (stack.size() % size == 0) {
-                System.out.println("Update Push:            " + stack);
+                System.out.println("Update Push till full:  " + stack);
                 System.out.println("Top point at:           " + stack.size());
             }
         }
         // print again after push more element to the stack that is already full
-        System.out.println("\nPush all:               " + stack);
-        System.out.println("After Push, top at:     " + stack.size());
+        System.out.println("\nPush additional:        " + stack);
+        System.out.println("After Push, top at:     " + stack.size() + "\n");
         System.out.println("Peek:                   " + stack.peek() + "\n");
-        System.out.println("Pop:                    " + stack.pop());
+        System.out.println("Pop the first el:       " + stack.pop());
+        System.out.println("Pop again, last el:     " + stack.pop());
         System.out.println("After Pop, top at:      " + stack.size());
         System.out.println("After Pop, remain:      " + stack);
-        System.out.println("isEmpty:                " + stack.isEmpty());
+        System.out.println("isEmpty:                " + stack.isEmpty() + "\n");
     }
 }
